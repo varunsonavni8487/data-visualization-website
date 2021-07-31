@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<title>Comparsion Project</title>
+	<style type="text/css">	
+	{	
+	}		
+	</style>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js">
+ 	function call(){
+
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body style="background-color: lightblue">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!--Enter No of Data you want to Enter<input type="textarea" rows="10" cols="25" id="text" align-content="center"><br><br><br>
+-->
+<p style="font-size: 28px">Enter data by comma seperated below:</p><textarea  placeholder="Enter your values" style="background-color: #ffc299" rows="5" cols="30" id="text">
+</textarea><br>
+<p style="font-size: 28px">Enter domain of value you are inserting below:</p><p>(for example: student_marks,population etc)</p><input placeholder="Enter your domain" style="background-color:#ffc299" type="text" id="t2">
+
+<div class="container">
+	<canvas id="myChart"></canvas>
+</div>
+<br>
+<p id="min" align="center" style="font-size:28px"></p>
+<p id="max" align="center" style="font-size:28px"></p>
+<script type="text/javascript">
+		var tgraph='pie';
+	function fun(){	
+		
+		var x = document.getElementById("text").value;
+		var dtext=document.getElementById("t2").value;
+		var res = x.split(",");
+			for(var i=0;i<res.length;i++)
+			{	
+		    	res[i]=parseInt(res[i]);
+		    }
+		var min_value = Math.min(...res)  // pass all vallue in argument    
+		var max_value = Math.max(...res);
+	var lab_arr=[]; // For label in Chart
+	for(var i=1;i<res.length+1;i++)
+			{	
+		    	lab_arr.push(dtext+"_"+i);
+		    }
+	var allchar="0123456789ABCDEF";
+	var rand_color=[];
+	for(var i=0;i<res.length;i++)
+		{		rand_color.push("#"+allchar[Math.floor(Math.random()*14)]+allchar[Math.floor(Math.random()*14)]+allchar[Math.floor(Math.random()*14)]);	
+		}
+    
+	
+	//document.write(res);
+	//var arr= [12,45,23,5,15];
+	let myChart = document.getElementById("myChart").getContext("2d");
+	
+	//Global property
+	Chart.defaults.global.defaultFontFamily = 'Lato';
+	Chart.defaults.global.defaultFontSize = 18;
+	Chart.defaults.global.defaultFontColor = '#777';
+	
+	if(window.bar != undefined)
+  	window.bar.destroy();
+
+	    window.bar = new Chart(myChart,{
+		type:tgraph, // bar horrizontalBar,pie,line,radar,polarArea
+		data:{
+			labels:lab_arr,//['people1','people2','people3','people4','people5'],
+			datasets:[{
+				label:dtext,
+				data:res,
+				//backgroundColor:'green'
+				backgroundColor:rand_color,//['green','yellow','pink','red','lightblue'],
+				borderWidth:1,
+				borderColor:'#777',
+				hoverBorderWidth:3,
+				hoverBoderColor:'#000'
+			}]
+		},
+		options:{
+			title:{
+				display:true,
+				text:'Comparsion of Values'
+			},
+			legend:{
+				position:'right'
+			}
+		},
+		/*layout: {
+			padding:{
+				left:50,
+				right:50,
+				top:20,
+				bottom:50
+			}
+		}*/
+	}); 
+	document.getElementById("min").innerHTML = "Minimum value of the domain "+dtext+" is "+min_value;
+	document.getElementById("max").innerHTML = "Maximum value of the domain "+dtext+" is "+max_value;
+
+
+}
+function graph2(){
+	//alert("s");
+	tgraph='bar';
+	fun();
+
+}
+function graph3(){
+	//alert("s");
+	tgraph='line';
+	fun();
+
+}
+function graph1(){
+	//alert("s");
+	tgraph='pie';//radar
+	fun();
+}
+function graph4(){
+	//alert("s");
+	tgraph='polarArea';//radar
+	fun();
+}
+function graph5(){
+	//alert("s");
+	tgraph='doughnut';//radar
+	fun();
+}
+function graph6(){
+	//alert("s");
+	tgraph='bubble';//radar
+	fun();
+}
+
+</script>
+<!--<input type="file" id="file1">-->
+
+<button onclick="graph1()">GRAPH1</button>
+<button onclick="graph2()">GRAPH2</button>
+<button onclick="graph3()">GRAPH3</button>
+<button onclick="graph4()">GRAPH4</button>
+<button onclick="graph5()">GRAPH5</button>
+
+</body>
+
+</html>
